@@ -7,6 +7,7 @@ class Tic_Tac_Toe:
 		self.num_col = 3
 		self.board = [[' ' for row in range(self.num_row)] for col in range(self.num_col)]
 		self.cells = [i for self.cells in self.board for i in self.cells]
+		self.counter = 0
 
 	def display_board(self):
 		"""Displays Header, tic-tac-toe board, and displays currently player position."""
@@ -46,39 +47,60 @@ class Tic_Tac_Toe:
 			return True
 		return False
 
+	def ask_replay(self):
+		replay = input("Would you like to play again? y/n: ")
+		if replay.lower() == 'y':
+			return True
+		elif replay.lower() == 'n':
+			return False
 
+			
+
+	def reset(self, player_1, player_2):
+		self.__init__()
+		player_1.__init__()
+		player_2.__init__()
 
 def play(game, player_1, player_2):
 	"""Main play function"""
 
-	while game.available_moves():
+	while True:
+		"""Displays board and collects names once."""
 		game.display_board()
-		player_1.get_name("Player 1")
-		player_2.get_name("Player 2")
+		player_1.letter = 'X'
+		player_2.letter = 'O'
+		player_1.get_name("Player 1, (X)", game)
+		player_2.get_name("Player 2, (O)", game)
+		game.display_board()
 		
-		player_1.get_letter()
+		"""Switches player dependent on game counter number"""
+		if game.counter % 2 == 0:
+			player = player_1
+		else:
+			player = player_2
 
-		if player_1.letter == 'x':
-			player_2.letter = 'o'
-		if player_1.letter == 'o':
-			player_2.letter = 'x'
-
+		"""Collects move from player and adds to game counter"""
+		player.get_move(t)
+		game.make_move(player.current_move, player.letter)
 		game.display_board()
-		player_1.get_move(t)
-		game.make_move(player_1.current_move, player_1.letter)
-		game.display_board()
-		if game.is_winner(player_1.letter):
-			print(f"Congragulations {player_1.name}!!! You Win!!!")
-			break
+		game.counter += 1
+		
 
-		player_2.get_move(t)
-		game.make_move(player_2.current_move, player_2.letter)
-		game.display_board()
-		if game.is_winner(player_2.letter):
-			print(f"Congragulations {player_2.name}!!! You Win!!!")
-			break
-
-
+		"""Checks for winner or tie. If either asks to replay"""
+		if game.is_winner(player.letter):
+			print(f"Congragulations {player.name}!!! You Win!!!")
+			if game.ask_replay():
+				game.reset(player_1, player_2)
+			else:
+				break
+		elif not game.available_moves():
+			game.reset(player_1, player_2)
+			print("It's a tie!!!")
+			if game.ask_replay():
+				game.reset(player_1, player_2)
+			else:
+				break
+			
 
 if __name__ == '__main__':
 	player_1 = HumanPlayer()

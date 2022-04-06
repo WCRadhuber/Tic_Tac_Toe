@@ -16,15 +16,16 @@ class HumanPlayer(Player):
 	def __init__(self):
 		super().__init__(name=None, letter=None, current_move=None)
 	
-	def get_name(self, player):
+	def get_name(self, player, game):
 		"""Collects name from human player"""
 		if self.name == None:
 			temp_name = input(f"{player} is your name?: ")
 			if temp_name.isalpha():
 				self.name = temp_name
 			else:
+				game.display_board()
 				print("Invalid name. Try again.")
-				self.get_name()
+				self.get_name(player, game)
 		else:
 			pass
 
@@ -48,7 +49,7 @@ class HumanPlayer(Player):
 				self.current_move = temp_move
 		except(TypeError, ValueError):
 			print("Invalid Input. Try again.")
-			self.get_move()
+			self.get_move(game)
 
 
 

@@ -1,4 +1,4 @@
-from player import HumanPlayer
+from player import HumanPlayer, RandomPlayer
 import os
 
 class Tic_Tac_Toe:
@@ -70,7 +70,9 @@ def play(game, player_1, player_2):
 		player_1.letter = 'X'
 		player_2.letter = 'O'
 		player_1.get_name("Player 1, (X)", game)
-		player_2.get_name("Player 2, (O)", game)
+		player_2.get_name("Player 2 (O)", game)
+
+
 		game.display_board()
 		
 		"""Switches player dependent on game counter number"""
@@ -104,6 +106,6 @@ def play(game, player_1, player_2):
 
 if __name__ == '__main__':
 	player_1 = HumanPlayer()
-	player_2 = HumanPlayer()
+	player_2 = RandomPlayer()
 	t = Tic_Tac_Toe()
 	play(t, player_1, player_2)

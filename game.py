@@ -1,7 +1,9 @@
-from player import HumanPlayer, RandomPlayer
+from player import HumanPlayer, ComputerPlayer
 import os
+import time
 
 class Tic_Tac_Toe:
+	"""Main Game class"""
 	def __init__(self):
 		self.num_row = 3
 		self.num_col = 3
@@ -48,6 +50,7 @@ class Tic_Tac_Toe:
 		return False
 
 	def ask_replay(self):
+		"""Asks for player input if they'd like to replay game. Returns boolean"""
 		replay = input("Would you like to play again? y/n: ")
 		if replay.lower() == 'y':
 			return True
@@ -55,8 +58,8 @@ class Tic_Tac_Toe:
 			return False
 
 			
-
 	def reset(self, player_1, player_2):
+		"""Resets constructors based on boolean input"""
 		self.__init__()
 		player_1.__init__()
 		player_2.__init__()
@@ -65,6 +68,7 @@ def play(game, player_1, player_2):
 	"""Main play function"""
 
 	while True:
+		timer = 0.5
 		"""Displays board and collects names once."""
 		game.display_board()
 		player_1.letter = 'X'
@@ -86,9 +90,10 @@ def play(game, player_1, player_2):
 		game.make_move(player.current_move, player.letter)
 		game.display_board()
 		game.counter += 1
+		time.sleep(timer)
 		
 
-		"""Checks for winner or tie. If either asks to replay"""
+		"""Checks for winner or tie. If either asks to replay. If replay 'y', resets constructors and plays again."""
 		if game.is_winner(player.letter):
 			print(f"Congragulations {player.name}!!! You Win!!!")
 			if game.ask_replay():
@@ -103,9 +108,9 @@ def play(game, player_1, player_2):
 			else:
 				break
 			
-
+"""sets up players in game. Can be human or computer players playing each other."""
 if __name__ == '__main__':
 	player_1 = HumanPlayer()
-	player_2 = RandomPlayer()
+	player_2 = ComputerPlayer()
 	t = Tic_Tac_Toe()
 	play(t, player_1, player_2)

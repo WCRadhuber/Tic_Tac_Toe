@@ -1,21 +1,14 @@
+import math
 import random
 
 class Player:
-	"""Defining the parent class for X and O players"""
+	"""Parent class for X and O players"""
 	def __init__(self, name=None, letter=None, current_move=None):
 		self.name = name
 		self.letter = letter
 		self.current_move = current_move
 
 
-	def get_name(self, player, game):
-		pass
-
-
-class HumanPlayer(Player):
-	def __init__(self):
-		super().__init__(name=None, letter=None, current_move=None)
-	
 	def get_name(self, player, game):
 		"""Collects name from human player"""
 		if self.name == None:
@@ -28,6 +21,13 @@ class HumanPlayer(Player):
 				self.get_name(player, game)
 		else:
 			pass
+
+
+class HumanPlayer(Player):
+	"""Class that colllects human player information"""
+	def __init__(self):
+		super().__init__(name=None, letter=None, current_move=None)
+	
 
 	def get_move(self, game):
 		"""Collects move from human player and checks to see if valid move."""
@@ -43,8 +43,8 @@ class HumanPlayer(Player):
 			self.get_move(game)
 
 
-
-class RandomPlayer(Player):
+class ComputerPlayer(Player):
+	"""Computer player that picks a square at random"""
 	def __init__(self):
 		super().__init__(name="Slow Eddie", letter=None, current_move=None)
 
@@ -53,13 +53,3 @@ class RandomPlayer(Player):
 		"""Takes in game class, and returns a random choice of cell"""
 		cell = random.choice(game.available_moves())
 		self.current_move = cell
-
-
-# class AI_Player(Player):
-# 	def __init__(self, name="Unbeatable Joe"):
-# 		super().__init__(self, name="Unbeatable Joe", letter =None)
-
-
-# 	def get_move(self):
-# 		"""Collects move from AI"""
-# 		pass
